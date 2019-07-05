@@ -107,14 +107,6 @@ Rem ****************************************************************************
 rem Reference: https://ss64.com/nt/setlocal.html
 rem Reference: https://ss64.com/nt/start.html
 
-echo "* git pull at %MY_REPO%/."
-start "git pull" /D "%MY_REPO%/" /B /wait git pull --tags
-if %ERRORLEVEL% neq 0 goto onError
-
-echo "* git checkout %TAG% at %MY_REPO%/."
-start "git checkout %TAG%" /D "%MY_REPO%/" /B /wait git checkout %TAG%
-if %ERRORLEVEL% neq 0 goto onError
-
 echo "* save git HEAD commit hash from repo %MY_REPO%/."
 start "git rev-parse HEAD" /D "%MY_REPO%/" /B /wait git rev-parse HEAD > "%PROJECT_PATH%"/tmp
 if %ERRORLEVEL% neq 0 goto onError
