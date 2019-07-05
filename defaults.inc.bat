@@ -19,6 +19,8 @@ Rem            If you intend to modify or specify them outside, keep the scheme!
 
 Rem ************************************************************************************************************************************************************************************
 Rem Build environment
+if "%APP_NAME%" == ""                  set APP_NAME=Nextcloud
+
 
 rem Comma separated list of build targets (default: Win64, Win32)
 if "%BUILD_TARGETS%" == ""                  set BUILD_TARGETS=Win64,Win32
