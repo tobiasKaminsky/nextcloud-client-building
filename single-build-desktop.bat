@@ -21,6 +21,7 @@ set MY_BUILD_PATH=%MY_REPO%/build
 set MY_INSTALL_PATH=%PROJECT_PATH%/install/%BUILD_TYPE%/%BUILD_ARCH%
 set MY_QT_DEPLOYMENT_PATH=%MY_INSTALL_PATH%/qt-libs
 
+echo "* APP_NAME=%APP_NAME%"
 echo "* BUILD_TYPE=%BUILD_TYPE%"
 echo "* BUILD_ARCH=%BUILD_ARCH%"
 echo "* CMAKE_GENERATOR=%CMAKE_GENERATOR%"
@@ -127,8 +128,8 @@ if "%BUILD_TYPE%" == "Debug" (
 ) else (
     set WINDEPLOYQT_BUILD_TYPE=release
 )
-echo "* Run windeployqt to collect all nextcloud.exe dependencies and output it to %MY_QT_DEPLOYMENT_PATH%/."
-start "windeployqt" /B /wait windeployqt.exe --%WINDEPLOYQT_BUILD_TYPE% --compiler-runtime "%MY_INSTALL_PATH%/bin/nextcloud.exe" --dir "%MY_QT_DEPLOYMENT_PATH%/"
+echo "* Run windeployqt to collect all %APP_NAME%.exe dependencies and output it to %MY_QT_DEPLOYMENT_PATH%/."
+start "windeployqt" /B /wait windeployqt.exe --%WINDEPLOYQT_BUILD_TYPE% --compiler-runtime "%MY_INSTALL_PATH%/bin/%APP_NAME%.exe" --dir "%MY_QT_DEPLOYMENT_PATH%/"
 if %ERRORLEVEL% neq 0 goto onError
 
 Rem ******************************************************************************************
