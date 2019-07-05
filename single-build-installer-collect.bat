@@ -18,6 +18,7 @@ set MY_INSTALL_PATH=%PROJECT_PATH%/install/%BUILD_TYPE%/%BUILD_ARCH%
 set MY_QT_DEPLOYMENT_PATH=%MY_INSTALL_PATH%/qt-libs
 set MY_COLLECT_PATH=%PROJECT_PATH%/collect/%BUILD_TYPE%/%BUILD_ARCH%
 
+echo "* APP_NAME=%APP_NAME%"
 echo "* BUILD_TYPE=%BUILD_TYPE%"
 echo "* BUILD_ARCH=%BUILD_ARCH%"
 echo "* PROJECT_PATH=%PROJECT_PATH%"
@@ -110,7 +111,7 @@ start "copy bin/" /D "%MY_COLLECT_PATH%/" /B /wait cp -af "%MY_INSTALL_PATH%/bin
 if %ERRORLEVEL% neq 0 goto onError
 
 echo "* copy ocsync.dll."
-start "copy ocsync.dll" /D "%MY_COLLECT_PATH%/" /B /wait cp -af "%MY_INSTALL_PATH%/bin/nextcloud/ocsync.dll" "%MY_COLLECT_PATH%/"
+start "copy ocsync.dll" /D "%MY_COLLECT_PATH%/" /B /wait cp -af "%MY_INSTALL_PATH%/bin/%APP_NAME%/ocsync.dll" "%MY_COLLECT_PATH%/"
 if %ERRORLEVEL% neq 0 goto onError
 
 Rem shell extension dll's for Explorer integration (status icons)
@@ -128,16 +129,16 @@ if %ERRORLEVEL% neq 0 goto onError
 
 Rem exclude system file list
 echo "* copy sync-exclude.lst."
-start "copy sync-exclude.lst" /D "%MY_COLLECT_PATH%/" /B /wait cp -af "%MY_INSTALL_PATH%/config/Nextcloud/sync-exclude.lst" "%MY_COLLECT_PATH%/"
+start "copy sync-exclude.lst" /D "%MY_COLLECT_PATH%/" /B /wait cp -af "%MY_INSTALL_PATH%/config/%APP_NAME%/sync-exclude.lst" "%MY_COLLECT_PATH%/"
 if %ERRORLEVEL% neq 0 goto onError
 
 Rem icon (hi-res version created by png2ico, if unavailable use lo-res: %MY_REPO%/admin/win/nsi/installer.ico)
 echo "* copy nextcloud.ico."
 if exist "%MY_BUILD_PATH%/src/gui/Nextcloud.ico" (
-    start "copy nextcloud.ico" /D "%MY_COLLECT_PATH%/" /B /wait cp -af "%MY_BUILD_PATH%/src/gui/Nextcloud.ico" "%MY_COLLECT_PATH%/nextcloud.ico"
+    start "copy nextcloud.ico to %APP_NAME%.ico" /D "%MY_COLLECT_PATH%/" /B /wait cp -af "%MY_BUILD_PATH%/src/gui/Nextcloud.ico" "%MY_COLLECT_PATH%/%APP_NAME%.ico"
 ) else (
-    echo "  NOT FOUND - try to copy installer.ico to nextcloud.ico"
-    start "copy installer.ico to nextcloud.ico" /D "%MY_COLLECT_PATH%/" /B /wait cp -af "%MY_REPO%/admin/win/nsi/installer.ico" "%MY_COLLECT_PATH%/nextcloud.ico"
+    echo "  NOT FOUND - try to copy installer.ico to %APP_NAME%.ico"
+    start "copy installer.ico to %APP_NAME%.ico" /D "%MY_COLLECT_PATH%/" /B /wait cp -af "%MY_REPO%/admin/win/nsi/installer.ico" "%MY_COLLECT_PATH%/%APP_NAME%.ico"
 )
 if %ERRORLEVEL% neq 0 goto onError
 
@@ -196,16 +197,16 @@ if "%USE_CODE_SIGNING%" == "0" (
     echo "** Code signing begins:"
 
     for %%G in (
-            "nextcloud/ocsync.dll"
+            "%APP_NAME%/ocsync.dll"
             "shellext/OCContextMenu.dll"
             "shellext/OCOverlays.dll"
             "shellext/OCUtil.dll"
             "%LIBCRYPTO_DLL_FILENAME%"
             "libeay32.dll"
             "ssleay32.dll"
-            "nextcloud.exe"
-            "nextcloudcmd.exe"
-            "nextcloudsync.dll"
+            "%APP_NAME%.exe"
+            "%APP_NAME%cmd.exe"
+            "%APP_NAME%sync.dll"
             "OCContextMenu.dll"
             "OCOverlays.dll"
             "ocsync.dll"
