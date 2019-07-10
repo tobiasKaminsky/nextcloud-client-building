@@ -226,7 +226,7 @@ if "%USE_CODE_SIGNING%" == "0" (
             "ssleay32.dll"
             "%APP_NAME_SANITIZED%.exe"
             "%APP_NAME_SANITIZED%cmd.exe"
-            "%APP_NAME_SANITIZEDpg%sync.dll"
+            "%APP_NAME_SANITIZED%sync.dll"
             "OCContextMenu.dll"
             "OCOverlays.dll"
             "ocsync.dll"
