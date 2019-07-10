@@ -19,6 +19,7 @@ set MY_QT_DEPLOYMENT_PATH=%MY_INSTALL_PATH%/qt-libs
 set MY_COLLECT_PATH=%PROJECT_PATH%/collect/%BUILD_TYPE%/%BUILD_ARCH%
 
 echo "* APP_NAME=%APP_NAME%"
+echo "* APP_NAME_SANITIZED=%APP_NAME_SANITIZED%"
 echo "* BUILD_TYPE=%BUILD_TYPE%"
 echo "* BUILD_ARCH=%BUILD_ARCH%"
 echo "* PROJECT_PATH=%PROJECT_PATH%"
@@ -111,7 +112,7 @@ start "copy bin/" /D "%MY_COLLECT_PATH%/" /B /wait cp -af "%MY_INSTALL_PATH%/bin
 if %ERRORLEVEL% neq 0 goto onError
 
 echo "* copy ocsync.dll."
-start "copy ocsync.dll" /D "%MY_COLLECT_PATH%/" /B /wait cp -af "%MY_INSTALL_PATH%/bin/%APP_NAME%/ocsync.dll" "%MY_COLLECT_PATH%/"
+start "copy ocsync.dll" /D "%MY_COLLECT_PATH%/" /B /wait cp -af "%MY_INSTALL_PATH%/bin/%APP_NAME_SANITIZED%/ocsync.dll" "%MY_COLLECT_PATH%/"
 if %ERRORLEVEL% neq 0 goto onError
 
 Rem shell extension dll's for Explorer integration (status icons)
